@@ -1,28 +1,41 @@
-# Piano di lavoro — InitTest
+# Piano di lavoro — IP Scanner
 
 ## Obiettivo
-[Descrivi cosa deve fare l'app/feature in 2-3 frasi]
+Tool CLI in Rust per scansione IP di subnet. Rileva host attivi con MAC address, hostname, OS (da TTL) e porte aperte.
 
 ## Stato attuale
 - [x] Setup iniziale progetto
 - [x] Struttura cartelle e CLAUDE.md
-- [ ] Definire stack tecnologico
-- [ ] Implementare feature principale
-- [ ] Test
-- [ ] Deploy
+- [x] Definire stack tecnologico (Rust + Tokio)
+- [x] Implementare CLI parsing (clap)
+- [x] Implementare CIDR parsing
+- [x] Implementare ICMP ping
+- [x] Implementare ARP lookup (Windows API)
+- [x] Implementare DNS reverse lookup
+- [x] Implementare OS detection (TTL)
+- [x] Implementare port scanner
+- [x] Implementare output formatter (tabella + JSON)
+- [ ] Installare Rust/Cargo
+- [ ] Build e test
+- [ ] Deploy (release build)
 
 ## Sessione corrente
-**Data:** [aggiorna ad ogni sessione]
-**Focus:** Setup iniziale progetto
-**Dove ero rimasto:** Struttura base creata, pronto per definire stack e obiettivi
+**Data:** 2026-03-18
+**Focus:** Implementazione completa IP Scanner
+**Dove ero rimasto:** Codice completato, in attesa installazione Rust
 
 ## Decisioni prese
-- [Data] Struttura progetto seguendo init.md di DF Solutions
+- 2026-03-18: Linguaggio Rust con async Tokio
+- 2026-03-18: Flag -d per detect (non -h che è riservato a help)
+- 2026-03-18: Flag -p per port scan
+- 2026-03-18: ARP via SendARP Windows API (no Npcap)
+- 2026-03-18: OS detection via TTL response
 
 ## Problemi noti
-- Nessuno al momento
+- Richiede privilegi admin su Windows per ICMP raw socket
+- Firewall Windows potrebbe bloccare ping
 
 ## Note per la prossima sessione
-- Definire lo stack tecnologico (linguaggio, framework, database)
-- Aggiornare CLAUDE.md con i comandi specifici
-- Iniziare implementazione
+- Installare Rust da rustup.rs
+- Eseguire `cargo build --release`
+- Testare con subnet locale

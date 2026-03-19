@@ -1,31 +1,60 @@
-# InitTest
+# IP Scanner
 
 ## Stack
-- Linguaggio: [da definire]
-- Framework: [da definire]
-- Database: [da definire]
-- Package manager: [da definire]
+- Linguaggio: Rust
+- Runtime: Tokio (async)
+- Package manager: Cargo
 
 ## Comandi principali
-- Build: `[da definire]`
-- Test: `[da definire]`
-- Lint: `[da definire]`
-- Dev server: `[da definire]`
+- Build: `cargo build --release`
+- Test: `cargo test`
+- Lint: `cargo clippy`
+- Run: `cargo run -- <SUBNET> [OPTIONS]`
+
+## Utilizzo
+```bash
+# Scan base (IP + MAC)
+ip-scanner 192.168.1.0/24
+
+# Con timeout custom
+ip-scanner 192.168.1.0/24 -t 2
+
+# Con hostname e OS detection
+ip-scanner 192.168.1.0/24 -d
+
+# Con port scan
+ip-scanner 192.168.1.0/24 -p
+
+# Completo
+ip-scanner 192.168.1.0/24 -t 2 -d -p
+
+# Output JSON
+ip-scanner 192.168.1.0/24 -d -o json
+```
 
 ## Struttura
 - `src/` → codice sorgente principale
-- `tests/` → test (mirror della struttura src/)
+  - `cli.rs` → parsing argomenti CLI
+  - `scanner/` → ping, arp, dns, port
+  - `network/` → parsing CIDR
+  - `os_detect/` → OS detection da TTL
+  - `output/` → formatter tabella/JSON
 
 ## Convenzioni codice
-- ES modules (import/export), mai CommonJS (require)
-- Nomi file: kebab-case
-- Nomi variabili/funzioni: camelCase
-- Nomi tipi/interfacce: PascalCase
+- Nomi file: snake_case
+- Nomi variabili/funzioni: snake_case
+- Nomi tipi/struct: PascalCase
+- Moduli pubblici via mod.rs
 
 ## Cosa NON fare
-- Non usare any in TypeScript
+- Non usare unwrap() senza motivo (usa ? o expect)
 - Non committare senza test
 - Non installare dipendenze senza conferma esplicita
+
+## Note Windows
+- Richiede privilegi admin per ICMP raw
+- ARP via SendARP (no Npcap necessario)
+- Firewall potrebbe bloccare ICMP
 
 ## Ambiente Windows
 - Sistema: Windows con Git Bash
